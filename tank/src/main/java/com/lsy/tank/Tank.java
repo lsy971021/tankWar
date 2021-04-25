@@ -14,10 +14,8 @@ public class Tank {
     private int y;
     private int speed=10;
     private Dir dir = Dir.DOWN;
+    TankFrame tankFrame = null;
 
-    public boolean isMoving() {
-        return moving;
-    }
 
     public void setMoving(boolean moving) {
         this.moving = moving;
@@ -41,10 +39,10 @@ public class Tank {
     int width=50;
     int height=50;
 
-    public Tank(int x, int y, int speed) {
+    public Tank(int x, int y,TankFrame tankFrame) {
         this.x = x;
         this.y = y;
-        this.speed = speed;
+        this.tankFrame = tankFrame;
     }
 
     @Override
@@ -113,7 +111,7 @@ public class Tank {
      * 坦克移动
      */
     public void moving(){
-        //if(!moving)  return;
+        if(!moving)  return;
         switch (dir) {
             case LIFT:
                 x -= speed;
@@ -130,7 +128,12 @@ public class Tank {
         }
     }
     public void tankPaint(Graphics g){
+        g.setColor(Color.GREEN);
         g.fillRect(x, y, width, height);
         moving();
+    }
+
+    public void fire() {
+        tankFrame.bullets.add(new Bullet(this.x,this.y,getDir(),this.tankFrame));
     }
 }

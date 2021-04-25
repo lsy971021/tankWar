@@ -12,7 +12,7 @@ public class Main {
     public static void main(String[] args) throws IllegalAccessException, InstantiationException, InterruptedException {
         TankFrame tankFrame = new TankFrame();
         while (true){
-            Thread.sleep(500);
+            Thread.sleep(50);
             tankFrame.repaint();
         }
     }

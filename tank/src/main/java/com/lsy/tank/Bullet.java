@@ -7,7 +7,8 @@ import java.awt.*;
  * 子弹
  */
 public class Bullet {
-    private int x,y,width=15,height=15,speed=15;
+    private int x, y, width = 15, height = 15, speed = 15;
+    TankFrame tankFrame = null;
 
     public Dir getDir() {
         return dir;
@@ -17,7 +18,17 @@ public class Bullet {
         this.dir = dir;
     }
 
+    public int getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(int speed) {
+        this.speed = speed;
+    }
+
+
     Dir dir = Dir.DOWN;
+
     public int getX() {
         return x;
     }
@@ -53,18 +64,43 @@ public class Bullet {
     public Bullet() {
     }
 
-    public Bullet(int x, int y) {
+    public Bullet(int x, int y, Dir dir, TankFrame tankFrame) {
         this.x = x;
         this.y = y;
+        this.dir = dir;
+        this.tankFrame = tankFrame;
+    }
+
+    /**
+     * 发射子弹
+     */
+    public void biubiubiu() {
+        switch (dir) {
+            case LIFT:
+                x -= speed;
+                break;
+            case RIGHT:
+                x += speed;
+                break;
+            case UP:
+                y -= speed;
+                break;
+            case DOWN:
+                y += speed;
+                break;
+        }
+        if (this.x < 0 || this.y < 0 || this.x > tankFrame.gameWidth || this.y > tankFrame.gameHeight)
+            tankFrame.bullets.remove(this);
     }
 
     /**
      * 画笔
+     *
      * @param g
      */
     public void bulletPaint(Graphics g) {
         g.setColor(Color.magenta);
-        g.drawOval(x,y,width,height);
-
+        g.fillOval(x+(tankFrame.tank.width-width)/2, y+(tankFrame.tank.height-height)/2, width, height);
+        biubiubiu();
     }
 }

@@ -5,44 +5,29 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author lsy
  * 坦克大战窗口
  */
 public class TankFrame extends Frame {
-    /**
-     * 定义坦克放下，默认向下
-     */
+    static final int gameWidth = 800, gameHeight = 600;
     Dir dir = Dir.DOWN;
-    /**
-     * 定义坦克位置和速度，若有多个坦克则不易增加，需要定义一个坦克类
-     */
-//    int x = 100, y = 100, speed = 10;
-    Tank tank = new Tank(100, 100);
-    /**
-     * 定义子弹，默认为null
-     */
-    Bullet bullet = null;
-    /**
-     * 设置是否向某个放下移动
-     */
+    Tank tank = new Tank(100, 100, this);
+    List<Bullet> bullets = new ArrayList<>();
     boolean up = false, down = false, lift = false, right = false;
 
+    /**
+     * 设置窗口属性
+     * @throws HeadlessException
+     */
     public TankFrame() throws HeadlessException {
-        setSize(800, 600);
+        setSize(gameWidth, gameHeight);
         setTitle("坦克大战");
-        /**
-         * 固定窗口不可调整大小
-         */
         setResizable(false);
-        /**
-         * 显示窗口,会自动调用paint方法
-         */
         setVisible(true);
-        /**
-         * 创建一个键盘监听器，也可以用lambda表达式
-         */
         addKeyListener(new MyKeyListener());
         /**
          * 创建一个窗口监听器，如果按X 则执行windowClosing方法
@@ -55,21 +40,45 @@ public class TankFrame extends Frame {
         });
     }
 
+
+    Image offScreenImage = null;
+
+    @Override
+    public void update(Graphics g) {
+        if (offScreenImage == null) {
+            offScreenImage = this.createImage(gameWidth, gameHeight);
+        }
+        Graphics gOffScreen = offScreenImage.getGraphics();
+        Color c = gOffScreen.getColor();
+        gOffScreen.setColor(Color.BLACK);
+        gOffScreen.fillRect(0, 0, gameWidth, gameHeight);
+        gOffScreen.setColor(c);
+        paint(gOffScreen);
+        g.drawImage(offScreenImage, 0, 0, null);
+    }
+
+
     /**
      * 相当于一个画图工具，参数g相当于画笔
-     *
      * @param g
      */
     @Override
     public void paint(Graphics g) {
-        /**
-         * 填充一个举行x,y轴代表从计算机坐上开始，往正有方向为+x，正下方向为+y,把画笔给坦克让他自己化
-         */
-        if (bullet != null) {
-            bullet.bulletPaint(g);
-        }
+        Color color = g.getColor();
+        g.setColor(Color.magenta);
+        g.drawString("子弹数量"+bullets.size(),700,500);
+        g.setColor(color);
         tank.tankPaint(g);
+        /**
+         * 写成这样报错！！！！
+         */
+        /*for (Bullet bullet : bullets) {
+            bullet.bulletPaint(g);
+        }*/
 
+        for (int i = 0; i < bullets.size(); i++) {
+            bullets.get(i).bulletPaint(g);
+        }
     }
 
 
@@ -88,23 +97,16 @@ public class TankFrame extends Frame {
             switch (keyCode) {
                 case KeyEvent.VK_LEFT:
                     lift = true;
-                    System.out.println("lift");
                     break;
                 case KeyEvent.VK_RIGHT:
                     right = true;
-                    System.out.println("right");
                     break;
                 case KeyEvent.VK_UP:
                     up = true;
-                    System.out.println("up");
                     break;
                 case KeyEvent.VK_DOWN:
                     down = true;
-                    System.out.println("down");
                     break;
-                case KeyEvent.VK_SPACE:
-                    System.out.println("发射子弹");
-                    bullet = new Bullet(tank.getX(), tank.getY());
                 default:
                     break;
             }
@@ -112,7 +114,7 @@ public class TankFrame extends Frame {
             /**
              * 执行paint方法
              */
-            repaint();
+            //repaint();
         }
 
         /**
@@ -136,7 +138,9 @@ public class TankFrame extends Frame {
                     down = false;
                     break;
                 case KeyEvent.VK_SPACE:
-                    bullet = null;
+                    /*bullet.setBullet(true);
+                    bullet = null;*/
+                    tank.fire();
                 default:
                     break;
             }
@@ -147,13 +151,13 @@ public class TankFrame extends Frame {
          * 设置坦克方向
          */
         public void setDir() {
-            //tank.setMoving(true);
+            tank.setMoving(true);
             if (up) dir = Dir.UP;
             if (down) dir = Dir.DOWN;
             if (lift) dir = Dir.LIFT;
             if (right) dir = Dir.RIGHT;
+            if (!lift && !right && !up && !down) tank.setMoving(false);
             tank.setDir(dir);
-            if (bullet != null) bullet.setDir(dir);
         }
     }
 }
