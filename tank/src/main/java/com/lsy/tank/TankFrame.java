@@ -14,12 +14,12 @@ public class TankFrame extends Frame {
     /**
      * 定义坦克放下，默认向下
      */
-    Dir dir =Dir.DOWN;
+    Dir dir = Dir.DOWN;
     /**
      * 定义坦克位置和速度，若有多个坦克则不易增加，需要定义一个坦克类
      */
 //    int x = 100, y = 100, speed = 10;
-    Tank tank = new Tank(100,100);
+    Tank tank = new Tank(100, 100);
     /**
      * 定义子弹，默认为null
      */
@@ -27,7 +27,8 @@ public class TankFrame extends Frame {
     /**
      * 设置是否向某个放下移动
      */
-    boolean up = false,down = false,lift = false,right = false;
+    boolean up = false, down = false, lift = false, right = false;
+
     public TankFrame() throws HeadlessException {
         setSize(800, 600);
         setTitle("坦克大战");
@@ -64,7 +65,7 @@ public class TankFrame extends Frame {
         /**
          * 填充一个举行x,y轴代表从计算机坐上开始，往正有方向为+x，正下方向为+y,把画笔给坦克让他自己化
          */
-        if(bullet!=null){
+        if (bullet != null) {
             bullet.bulletPaint(g);
         }
         tank.tankPaint(g);
@@ -78,6 +79,7 @@ public class TankFrame extends Frame {
     class MyKeyListener extends KeyAdapter {
         /**
          * 当键盘被按下去时
+         *
          * @param e
          */
         @Override
@@ -102,7 +104,7 @@ public class TankFrame extends Frame {
                     break;
                 case KeyEvent.VK_SPACE:
                     System.out.println("发射子弹");
-                    bullet = new Bullet(tank.getX(),tank.getY());
+                    bullet = new Bullet(tank.getX(), tank.getY());
                 default:
                     break;
             }
@@ -115,6 +117,7 @@ public class TankFrame extends Frame {
 
         /**
          * 当键盘被抬起时
+         *
          * @param e
          */
         @Override
@@ -143,18 +146,14 @@ public class TankFrame extends Frame {
         /**
          * 设置坦克方向
          */
-        public void setDir(){
-            if(up || down || lift || down)  {
-                tank.setMoving(true);
-                if(up) dir = Dir.UP;
-                if(down) dir = Dir.DOWN;
-                if(lift) dir = Dir.LIFT;
-                if(right) dir = Dir.RIGHT;
-            }else {
-                tank.setMoving(false);
-            }
+        public void setDir() {
+            //tank.setMoving(true);
+            if (up) dir = Dir.UP;
+            if (down) dir = Dir.DOWN;
+            if (lift) dir = Dir.LIFT;
+            if (right) dir = Dir.RIGHT;
             tank.setDir(dir);
-            if(bullet!=null) bullet.setDir(dir);
+            if (bullet != null) bullet.setDir(dir);
         }
     }
 }

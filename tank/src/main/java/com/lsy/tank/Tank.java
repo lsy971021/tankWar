@@ -113,7 +113,7 @@ public class Tank {
      * 坦克移动
      */
     public void moving(){
-        if(!moving)  return;
+        //if(!moving)  return;
         switch (dir) {
             case LIFT:
                 x -= speed;
@@ -130,12 +130,7 @@ public class Tank {
         }
     }
     public void tankPaint(Graphics g){
-
-        /*if(dir == Dir.LIFT) x -= speed;
-        if(dir == Dir.RIGHT) x += speed;
-        if(dir == Dir.UP) y -= speed;
-        if(dir == Dir.DOWN) y += speed;*/
-        g.fillRect(this.getX(), this.getY(), this.getWidth(), this.getHeight());
+        g.fillRect(x, y, width, height);
         moving();
     }
 }
