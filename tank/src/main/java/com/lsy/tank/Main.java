@@ -11,9 +11,9 @@ import java.awt.event.WindowEvent;
 public class Main {
     public static void main(String[] args) throws IllegalAccessException, InstantiationException, InterruptedException {
         TankFrame tankFrame = new TankFrame();
-        /*while (true){
+        while (true){
             Thread.sleep(500);
             tankFrame.repaint();
-        }*/
+        }
     }
 }

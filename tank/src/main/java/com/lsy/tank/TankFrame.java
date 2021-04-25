@@ -144,10 +144,15 @@ public class TankFrame extends Frame {
          * 设置坦克方向
          */
         public void setDir(){
-            if(up) dir = Dir.UP;
-            if(down) dir = Dir.DOWN;
-            if(lift) dir = Dir.LIFT;
-            if(right) dir = Dir.RIGHT;
+            if(up || down || lift || down)  {
+                tank.setMoving(true);
+                if(up) dir = Dir.UP;
+                if(down) dir = Dir.DOWN;
+                if(lift) dir = Dir.LIFT;
+                if(right) dir = Dir.RIGHT;
+            }else {
+                tank.setMoving(false);
+            }
             tank.setDir(dir);
             if(bullet!=null) bullet.setDir(dir);
         }

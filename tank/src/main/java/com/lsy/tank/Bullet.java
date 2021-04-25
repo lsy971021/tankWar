@@ -65,19 +65,6 @@ public class Bullet {
     public void bulletPaint(Graphics g) {
         g.setColor(Color.magenta);
         g.drawOval(x,y,width,height);
-        /*switch (dir) {
-            case LIFT:
-                x -= speed;
-                break;
-            case RIGHT:
-                x += speed;
-                break;
-            case UP:
-                y -= speed;
-                break;
-            case DOWN:
-                y += speed;
-                break;
-        }*/
+
     }
 }
