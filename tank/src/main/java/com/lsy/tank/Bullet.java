@@ -100,7 +100,21 @@ public class Bullet {
      */
     public void bulletPaint(Graphics g) {
         g.setColor(Color.magenta);
-        g.fillOval(x+(tankFrame.tank.width-width)/2, y+(tankFrame.tank.height-height)/2, width, height);
+        //g.fillOval(x+(tankFrame.tank.width-width)/2, y+(tankFrame.tank.height-height)/2, width, height);
+        switch (dir) {
+            case LIFT:
+                g.drawImage(ResourceMgr.bulletL,x+(tankFrame.tank.width-width)/2,y+(tankFrame.tank.height-height)/2,null);
+                break;
+            case RIGHT:
+                g.drawImage(ResourceMgr.bulletR,x+(tankFrame.tank.width-width)/2,y+(tankFrame.tank.height-height)/2,null);
+                break;
+            case UP:
+                g.drawImage(ResourceMgr.bulletU,x+(tankFrame.tank.width-width)/2,y+(tankFrame.tank.height-height)/2,null);
+                break;
+            case DOWN:
+                g.drawImage(ResourceMgr.bulletD,x+(tankFrame.tank.width-width)/2,y+(tankFrame.tank.height-height)/2,null);
+                break;
+        }
         biubiubiu();
     }
 }
