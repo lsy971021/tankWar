@@ -27,7 +27,7 @@ public class Bullet {
     }
 
     /**
-     * 发射子弹的坐标的变化
+     * 发射子弹的坐标的变化及对子弹消失减1操作
      */
     public void biubiubiu() {
         switch (dir) {
@@ -56,7 +56,6 @@ public class Bullet {
      */
     public void bulletPaint(Graphics g) {
         g.setColor(Color.magenta);
-        //g.fillOval(x+(tankFrame.tank.width-width)/2, y+(tankFrame.tank.height-height)/2, width, height);
         switch (dir) {
             case LIFT:
                 g.drawImage(ResourceMgr.bulletL,x+(tank.width-width)/2,y+(tank.height-height)/2,null);

@@ -85,7 +85,6 @@ public class Tank {
 
     /**
      * 显示坦克到屏幕
-     *
      * @param g
      */
     public void tankPaint(Graphics g) {
@@ -108,10 +107,10 @@ public class Tank {
     }
 
     /**
-     * 创建坦克开火的的子弹对象
+     * 创建坦克开火的的子弹对象并对子弹数量加1
      */
     public void fire() {
         bullets.add(new Bullet(this.x, this.y, getDir(),this));
-        TankFrame.bulletNum += bullets.size();
+        ++ TankFrame.bulletNum;
     }
 }

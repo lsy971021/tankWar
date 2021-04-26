@@ -15,6 +15,7 @@ public class Main {
         List<Tank> tankList = tankFrame.tankList;
         for (int i = 1; i < 4; i++) {
             tankList.add(new Tank(100*i, 100));
+            ++ TankFrame.tankNum;
         }
         while (true){
             Thread.sleep(50);

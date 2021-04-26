@@ -15,7 +15,11 @@ import java.util.Random;
  */
 public class TankFrame extends Frame {
     Random r = new Random();
+    /**
+     * 子弹数量、坦克数量
+     */
     static int bulletNum = 0;
+    static int tankNum = 0;
     /**
      * 定义游戏窗口属性
      */
@@ -91,9 +95,9 @@ public class TankFrame extends Frame {
             int moveTime = r.nextInt(9) + 1;
             if(moveTime>8) {
                 int re = r.nextInt(3) + 1;
+                tankOther.fire();
                 switch (re) {
                     case 1:
-                        tankOther.fire();
                         tankOther.setDir(Dir.LIFT);
                         break;
                     case 2:
@@ -115,7 +119,8 @@ public class TankFrame extends Frame {
         Color color = g.getColor();
         g.setColor(Color.magenta);
         g.setColor(color);
-        g.drawString("子弹数量" + TankFrame.bulletNum, 700, 500);
+        g.drawString("子弹数量: " + bulletNum, 680, 500);
+        g.drawString("敌方坦克数量: " + tankNum, 680, 470);
         tank.tankPaint(g);
         /**
          * 写成这样报错！！！！
