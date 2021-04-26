@@ -129,7 +129,20 @@ public class Tank {
     }
     public void tankPaint(Graphics g){
         g.setColor(Color.GREEN);
-        g.fillRect(x, y, width, height);
+        switch (dir) {
+            case LIFT:
+                g.drawImage(ResourceMgr.tankL,x,y,null);
+                break;
+            case RIGHT:
+                g.drawImage(ResourceMgr.tankR,x,y,null);
+                break;
+            case UP:
+                g.drawImage(ResourceMgr.tankU,x,y,null);
+                break;
+            case DOWN:
+                g.drawImage(ResourceMgr.tankD,x,y,null);
+                break;
+        }
         moving();
     }
 
