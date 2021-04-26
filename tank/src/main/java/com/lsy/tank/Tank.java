@@ -12,10 +12,10 @@ public class Tank {
      */
     private int x;
     private int y;
-    private int speed=10;
+    private int speed = 10;
     private Dir dir = Dir.DOWN;
-    TankFrame tankFrame = null;
 
+    private TankFrame tankFrame = null;
 
     public void setMoving(boolean moving) {
         this.moving = moving;
@@ -36,117 +36,68 @@ public class Tank {
         this.y = y;
     }
 
-    int width=50;
-    int height=50;
+    int width = 50;
+    int height = 50;
 
-    public Tank(int x, int y,TankFrame tankFrame) {
+    public Tank(int x, int y, TankFrame tankFrame) {
         this.x = x;
         this.y = y;
         this.tankFrame = tankFrame;
     }
 
-    @Override
-    public String toString() {
-        return "Tank{" +
-                "x=" + x +
-                ", y=" + y +
-                ", speed=" + speed +
-                ", width=" + width +
-                ", height=" + height +
-                '}';
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public void setY(int y) {
-        this.y = y;
-    }
-
-    public int getSpeed() {
-        return speed;
-    }
-
-    public void setSpeed(int speed) {
-        this.speed = speed;
-    }
-
-    public int getWidth() {
-        return width;
-    }
-
-    public void setWidth(int width) {
-        this.width = width;
-    }
-
-    public int getHeight() {
-        return height;
-    }
-
-    public void setHeight(int height) {
-        this.height = height;
-    }
-
-    public Tank() {
-    }
-
-    public Tank(int x, int y, int speed, int width, int height) {
-        this.x = x;
-        this.y = y;
-        this.speed = speed;
-        this.width = width;
-        this.height = height;
-    }
-
     /**
-     * 坦克移动
+     * 坦克移动坐标的变化
      */
-    public void moving(){
-        if(!moving)  return;
+    public void moving() {
+        if (!moving) return;
         switch (dir) {
             case LIFT:
                 x -= speed;
+                if (x < 0) x += speed;
                 break;
             case RIGHT:
                 x += speed;
+                if (x > tankFrame.gameWidth - width) x -= speed;
                 break;
             case UP:
                 y -= speed;
+                if (y < 0) y += speed;
                 break;
             case DOWN:
                 y += speed;
+                if (y > tankFrame.gameHeight - height) y -= speed;
                 break;
         }
     }
-    public void tankPaint(Graphics g){
+
+    /**
+     * 显示坦克到屏幕
+     *
+     * @param g
+     */
+    public void tankPaint(Graphics g) {
         g.setColor(Color.GREEN);
         switch (dir) {
             case LIFT:
-                g.drawImage(ResourceMgr.tankL,x,y,null);
+                g.drawImage(ResourceMgr.tankL, x, y, null);
                 break;
             case RIGHT:
-                g.drawImage(ResourceMgr.tankR,x,y,null);
+                g.drawImage(ResourceMgr.tankR, x, y, null);
                 break;
             case UP:
-                g.drawImage(ResourceMgr.tankU,x,y,null);
+                g.drawImage(ResourceMgr.tankU, x, y, null);
                 break;
             case DOWN:
-                g.drawImage(ResourceMgr.tankD,x,y,null);
+                g.drawImage(ResourceMgr.tankD, x, y, null);
                 break;
         }
         moving();
     }
 
+    /**
+     * 创建坦克开火的的子弹对象
+     */
     public void fire() {
-        tankFrame.bullets.add(new Bullet(this.x,this.y,getDir(),this.tankFrame));
+        tankFrame.bullets.add(new Bullet(this.x, this.y, getDir(), this.tankFrame));
     }
 }

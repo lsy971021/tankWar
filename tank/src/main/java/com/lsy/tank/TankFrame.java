@@ -10,12 +10,25 @@ import java.util.List;
 
 /**
  * @author lsy
- * 坦克大战窗口
+ * 坦克大战窗口图形
  */
 public class TankFrame extends Frame {
+    /**
+     * 定义游戏窗口属性
+     */
     static final int gameWidth = 800, gameHeight = 600;
-    Dir dir = Dir.DOWN;
-    Tank tank = new Tank(100, 100, this);
+    private Dir dir = Dir.DOWN;
+    /**
+     * 创建主坦克对象
+     */
+    Tank tank = new Tank(100, 200, this);
+    /**
+     * 创建电脑坦克list对象
+     */
+    List<Tank> tankList = new ArrayList<>();
+    /**
+     * 创建子弹list对象
+     */
     List<Bullet> bullets = new ArrayList<>();
     boolean up = false, down = false, lift = false, right = false;
 
@@ -40,9 +53,10 @@ public class TankFrame extends Frame {
         });
     }
 
-
+    /**
+     * 双缓冲
+     */
     Image offScreenImage = null;
-
     @Override
     public void update(Graphics g) {
         if (offScreenImage == null) {
@@ -64,6 +78,12 @@ public class TankFrame extends Frame {
      */
     @Override
     public void paint(Graphics g) {
+        /**
+         * 将坦克list显示到屏幕
+         */
+        for (int i = 0; i < tankList.size(); i++) {
+            tankList.get(i).tankPaint(g);
+        }
         Color color = g.getColor();
         g.setColor(Color.magenta);
         g.drawString("子弹数量"+bullets.size(),700,500);
@@ -72,9 +92,9 @@ public class TankFrame extends Frame {
         /**
          * 写成这样报错！！！！
          */
-        /*for (Bullet bullet : bullets) {
-            bullet.bulletPaint(g);
-        }*/
+//        for (Bullet bullet : bullets) {
+//            bullet.bulletPaint(g);
+//        }
 
         for (int i = 0; i < bullets.size(); i++) {
             bullets.get(i).bulletPaint(g);
@@ -86,11 +106,6 @@ public class TankFrame extends Frame {
      * 键盘监听器
      */
     class MyKeyListener extends KeyAdapter {
-        /**
-         * 当键盘被按下去时
-         *
-         * @param e
-         */
         @Override
         public void keyPressed(KeyEvent e) {
             int keyCode = e.getKeyCode();
@@ -111,17 +126,8 @@ public class TankFrame extends Frame {
                     break;
             }
             setDir();
-            /**
-             * 执行paint方法
-             */
-            //repaint();
         }
 
-        /**
-         * 当键盘被抬起时
-         *
-         * @param e
-         */
         @Override
         public void keyReleased(KeyEvent e) {
             switch (e.getKeyCode()) {

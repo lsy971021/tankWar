@@ -7,62 +7,16 @@ import java.awt.*;
  * 子弹
  */
 public class Bullet {
-    private int x, y, width = 15, height = 15, speed = 15;
+    /**
+     * 定义子弹坐标、尺寸和速度
+     */
+    private int x, y, width = ResourceMgr.bulletD.getWidth(), height = ResourceMgr.bulletD.getHeight(), speed = 15;
     TankFrame tankFrame = null;
 
-    public Dir getDir() {
-        return dir;
-    }
-
-    public void setDir(Dir dir) {
-        this.dir = dir;
-    }
-
-    public int getSpeed() {
-        return speed;
-    }
-
-    public void setSpeed(int speed) {
-        this.speed = speed;
-    }
-
-
+    /**
+     * 子弹默认向下打出
+     */
     Dir dir = Dir.DOWN;
-
-    public int getX() {
-        return x;
-    }
-
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public void setY(int y) {
-        this.y = y;
-    }
-
-    public int getWidth() {
-        return width;
-    }
-
-    public void setWidth(int width) {
-        this.width = width;
-    }
-
-    public int getHeight() {
-        return height;
-    }
-
-    public void setHeight(int height) {
-        this.height = height;
-    }
-
-    public Bullet() {
-    }
 
     public Bullet(int x, int y, Dir dir, TankFrame tankFrame) {
         this.x = x;
@@ -72,7 +26,7 @@ public class Bullet {
     }
 
     /**
-     * 发射子弹
+     * 发射子弹的坐标的变化
      */
     public void biubiubiu() {
         switch (dir) {
@@ -94,8 +48,7 @@ public class Bullet {
     }
 
     /**
-     * 画笔
-     *
+     * 画笔，将子弹显示到屏幕
      * @param g
      */
     public void bulletPaint(Graphics g) {
