@@ -1,6 +1,8 @@
 package com.lsy.tank;
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author lsy
@@ -12,6 +14,17 @@ public class Tank {
      */
     private int x;
     private int y;
+
+
+    List<Bullet> bullets = new ArrayList<>();
+    public List<Bullet> getBullets() {
+        return bullets;
+    }
+
+    public void setSpeed(int speed) {
+        this.speed = speed;
+    }
+
     private int speed = 10;
     private Dir dir = Dir.DOWN;
 
@@ -46,7 +59,7 @@ public class Tank {
     }
 
     /**
-     * 坦克移动坐标的变化
+     * 坦克移动坐标的变化及边界问题
      */
     public void moving() {
         if (!moving) return;
@@ -98,6 +111,7 @@ public class Tank {
      * 创建坦克开火的的子弹对象
      */
     public void fire() {
-        tankFrame.bullets.add(new Bullet(this.x, this.y, getDir(), this.tankFrame));
+        bullets.add(new Bullet(this.x, this.y, getDir(),this));
+        TankFrame.bulletNum += bullets.size();
     }
 }

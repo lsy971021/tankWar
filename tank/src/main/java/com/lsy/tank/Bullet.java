@@ -12,17 +12,18 @@ public class Bullet {
      */
     private int x, y, width = ResourceMgr.bulletD.getWidth(), height = ResourceMgr.bulletD.getHeight(), speed = 15;
     TankFrame tankFrame = null;
+    Tank tank = null;
 
     /**
      * 子弹默认向下打出
      */
     Dir dir = Dir.DOWN;
 
-    public Bullet(int x, int y, Dir dir, TankFrame tankFrame) {
+    public Bullet(int x, int y, Dir dir, Tank tank) {
         this.x = x;
         this.y = y;
         this.dir = dir;
-        this.tankFrame = tankFrame;
+        this.tank = tank;
     }
 
     /**
@@ -43,8 +44,10 @@ public class Bullet {
                 y += speed;
                 break;
         }
-        if (this.x < 0 || this.y < 0 || this.x > tankFrame.gameWidth || this.y > tankFrame.gameHeight)
-            tankFrame.bullets.remove(this);
+        if (this.x < 0 || this.y < 0 || this.x > tankFrame.gameWidth || this.y > tankFrame.gameHeight){
+            tank.bullets.remove(this);
+            -- TankFrame.bulletNum;
+        }
     }
 
     /**
@@ -56,16 +59,16 @@ public class Bullet {
         //g.fillOval(x+(tankFrame.tank.width-width)/2, y+(tankFrame.tank.height-height)/2, width, height);
         switch (dir) {
             case LIFT:
-                g.drawImage(ResourceMgr.bulletL,x+(tankFrame.tank.width-width)/2,y+(tankFrame.tank.height-height)/2,null);
+                g.drawImage(ResourceMgr.bulletL,x+(tank.width-width)/2,y+(tank.height-height)/2,null);
                 break;
             case RIGHT:
-                g.drawImage(ResourceMgr.bulletR,x+(tankFrame.tank.width-width)/2,y+(tankFrame.tank.height-height)/2,null);
+                g.drawImage(ResourceMgr.bulletR,x+(tank.width-width)/2,y+(tank.height-height)/2,null);
                 break;
             case UP:
-                g.drawImage(ResourceMgr.bulletU,x+(tankFrame.tank.width-width)/2,y+(tankFrame.tank.height-height)/2,null);
+                g.drawImage(ResourceMgr.bulletU,x+(tank.width-width)/2,y+(tank.height-height)/2,null);
                 break;
             case DOWN:
-                g.drawImage(ResourceMgr.bulletD,x+(tankFrame.tank.width-width)/2,y+(tankFrame.tank.height-height)/2,null);
+                g.drawImage(ResourceMgr.bulletD,x+(tank.width-width)/2,y+(tank.height-height)/2,null);
                 break;
         }
         biubiubiu();

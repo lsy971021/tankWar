@@ -7,12 +7,15 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * @author lsy
  * 坦克大战窗口图形
  */
 public class TankFrame extends Frame {
+    Random r = new Random();
+    static int bulletNum = 0;
     /**
      * 定义游戏窗口属性
      */
@@ -26,14 +29,12 @@ public class TankFrame extends Frame {
      * 创建电脑坦克list对象
      */
     List<Tank> tankList = new ArrayList<>();
-    /**
-     * 创建子弹list对象
-     */
-    List<Bullet> bullets = new ArrayList<>();
+
     boolean up = false, down = false, lift = false, right = false;
 
     /**
      * 设置窗口属性
+     *
      * @throws HeadlessException
      */
     public TankFrame() throws HeadlessException {
@@ -57,6 +58,7 @@ public class TankFrame extends Frame {
      * 双缓冲
      */
     Image offScreenImage = null;
+
     @Override
     public void update(Graphics g) {
         if (offScreenImage == null) {
@@ -74,6 +76,7 @@ public class TankFrame extends Frame {
 
     /**
      * 相当于一个画图工具，参数g相当于画笔
+     *
      * @param g
      */
     @Override
@@ -82,12 +85,37 @@ public class TankFrame extends Frame {
          * 将坦克list显示到屏幕
          */
         for (int i = 0; i < tankList.size(); i++) {
-            tankList.get(i).tankPaint(g);
+            Tank tankOther = tankList.get(i);
+            tankOther.setMoving(true);
+            tankOther.setSpeed(1);
+            int moveTime = r.nextInt(9) + 1;
+            if(moveTime>8) {
+                int re = r.nextInt(3) + 1;
+                switch (re) {
+                    case 1:
+                        tankOther.fire();
+                        tankOther.setDir(Dir.LIFT);
+                        break;
+                    case 2:
+                        tankOther.setDir(Dir.RIGHT);
+                        break;
+                    case 3:
+                        tankOther.setDir(Dir.DOWN);
+                        break;
+                    case 4:
+                        tankOther.setDir(Dir.UP);
+                        break;
+                }
+            }
+            tankOther.tankPaint(g);
+            for (int u = 0; u < tankOther.bullets.size(); u++) {
+                tankOther.getBullets().get(u).bulletPaint(g);
+            }
         }
         Color color = g.getColor();
         g.setColor(Color.magenta);
-        g.drawString("子弹数量"+bullets.size(),700,500);
         g.setColor(color);
+        g.drawString("子弹数量" + TankFrame.bulletNum, 700, 500);
         tank.tankPaint(g);
         /**
          * 写成这样报错！！！！
@@ -95,10 +123,10 @@ public class TankFrame extends Frame {
 //        for (Bullet bullet : bullets) {
 //            bullet.bulletPaint(g);
 //        }
-
-        for (int i = 0; i < bullets.size(); i++) {
-            bullets.get(i).bulletPaint(g);
+        for (int i = 0; i < tank.bullets.size(); i++) {
+            tank.getBullets().get(i).bulletPaint(g);
         }
+
     }
 
 
