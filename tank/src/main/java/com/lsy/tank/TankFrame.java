@@ -15,11 +15,12 @@ import java.util.Random;
  */
 public class TankFrame extends Frame {
     Random r = new Random();
+    static List<Integer> group = new ArrayList<>();
     /**
-     * 子弹数量、坦克数量
+     * 坦克数量
      */
-    static int bulletNum = 0;
     static int tankNum = 0;
+    static List<Bullet> bullets = new ArrayList<>();
     /**
      * 定义游戏窗口属性
      */
@@ -28,7 +29,8 @@ public class TankFrame extends Frame {
     /**
      * 创建主坦克对象
      */
-    static Tank tank = new Tank(100, 200,true);
+    static Tank tank = new Tank(100, 200);
+
     /**
      * 创建电脑坦克list对象
      */
@@ -112,14 +114,14 @@ public class TankFrame extends Frame {
                 }
             }
             tankOther.tankPaint(g);
-            for (int u = 0; u < tankOther.getBullets().size(); u++) {
+            /*for (int u = 0; u < tankOther.getBullets().size(); u++) {
                 tankOther.getBullets().get(u).bulletPaint(g);
-            }
+            }*/
         }
         Color color = g.getColor();
         g.setColor(Color.magenta);
         g.setColor(color);
-        g.drawString("子弹数量: " + bulletNum, 680, 500);
+        g.drawString("子弹数量: " + bullets.size(), 680, 500);
         g.drawString("敌方坦克数量: " + tankNum, 680, 470);
         tank.tankPaint(g);
         /**
@@ -128,8 +130,8 @@ public class TankFrame extends Frame {
 //        for (Bullet bullet : bullets) {
 //            bullet.bulletPaint(g);
 //        }
-        for (int i = 0; i < tank.getBullets().size(); i++) {
-            tank.getBullets().get(i).bulletPaint(g);
+        for (int i = 0; i < bullets.size(); i++) {
+            bullets.get(i).bulletPaint(g);
         }
 
     }

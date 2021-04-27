@@ -11,7 +11,9 @@ public class Main {
         TankFrame tankFrame = new TankFrame();
         List<Tank> tankList = TankFrame.tankList;
         for (int i = 1; i < 4; i++) {
-            tankList.add(new Tank(100*i, 100,false));
+            Tank tank = new Tank(100 * i, 100);
+            tank.group = Group.Red;
+            tankList.add(tank);
             ++ TankFrame.tankNum;
         }
         while (true){

@@ -1,7 +1,6 @@
 package com.lsy.tank;
 
 import java.awt.*;
-import java.util.List;
 
 /**
  * @author lsy
@@ -16,17 +15,28 @@ public class Bullet {
     private int width = ResourceMgr.bulletD.getWidth();
     private int height = ResourceMgr.bulletD.getHeight();
     private int speed = 15;
-
-    Tank tank = null;
-
+    private boolean die = false;
+    Rectangle rectangle = new Rectangle();
+    private Group group = Group.Red;
+    boolean team;
     Dir dir = Dir.DOWN;
-    public Bullet(int x, int y, Dir dir, Tank tank) {
+    public Bullet(int x, int y, Dir dir, Group group) {
         this.x = x;
         this.y = y;
         this.dir = dir;
-        this.tank = tank;
-
+        rectangle.x = this.x;
+        rectangle.y = this.y;
+        rectangle.width = width;
+        rectangle.height = height;
+        this.group = group;
     }
+
+   /* public void isTeam(Tank t){
+        team=t.group==group;
+        if(!team&&!tank.isDie()&&!this.die&&tank.rectangle.intersects(this.rectangle)){
+            tank.goDie();
+        }
+    }*/
 
     /**
      * 发射子弹的坐标的变化及对子弹消失减1操作
@@ -47,29 +57,22 @@ public class Bullet {
                 break;
         }
         if (this.x < 0 || this.y < 0 || this.x > TankFrame.gameWidth || this.y > TankFrame.gameHeight) {
-            this.rmBullet(tank.getBullets());
-            --TankFrame.bulletNum;
+            this.goDie();
         }
-        /*List<Tank> tankList = TankFrame.tankList;
-        if(tank.isMaster()){
-            System.out.println("x:"+x+"y:"+y);
-            for (int i = 0; i < tankList.size(); i++) {
-                System.out.println("outhers x:"+tankList.get(i).getX()+"others y:"+tankList.get(i).getY());
-                if(x==tankList.get(i).getX()&&y==tankList.get(i).getY()){
-                    tankList.remove(i);
-                    System.out.println("=====");
-                }
-            }
-        }*/
-
     }
 
     /**
-     * 移除出边界的子弹
-     * @param bullets
+     * 子弹消失
      */
-    public void rmBullet(List<Bullet> bullets){
-        bullets.remove(this);
+    public void goDie(){
+        die = true;
+    }
+
+    /**
+     * 移出消失的子弹
+     */
+    public void rmBullet(){
+        TankFrame.bullets.remove(this);
     }
 
     /**
@@ -77,19 +80,20 @@ public class Bullet {
      * @param g
      */
     public void bulletPaint(Graphics g) {
+        if(die) rmBullet();
         g.setColor(Color.magenta);
         switch (dir) {
             case LIFT:
-                g.drawImage(ResourceMgr.bulletL, x + (tank.width - width) / 2, y + (tank.height - height) / 2, null);
+                g.drawImage(ResourceMgr.bulletL, x + (Tank.width - width) / 2, y + (Tank.height - height) / 2, null);
                 break;
             case RIGHT:
-                g.drawImage(ResourceMgr.bulletR, x + (tank.width - width) / 2, y + (tank.height - height) / 2, null);
+                g.drawImage(ResourceMgr.bulletR, x + (Tank.width - width) / 2, y + (Tank.height - height) / 2, null);
                 break;
             case UP:
-                g.drawImage(ResourceMgr.bulletU, x + (tank.width - width) / 2, y + (tank.height - height) / 2, null);
+                g.drawImage(ResourceMgr.bulletU, x + (Tank.width - width) / 2, y + (Tank.height - height) / 2, null);
                 break;
             case DOWN:
-                g.drawImage(ResourceMgr.bulletD, x + (tank.width - width) / 2, y + (tank.height - height) / 2, null);
+                g.drawImage(ResourceMgr.bulletD, x + (Tank.width - width) / 2, y + (Tank.height - height) / 2, null);
                 break;
         }
         biubiubiu();

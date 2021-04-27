@@ -14,19 +14,29 @@ public class Tank {
      */
     private int x;
     private int y;
+    Group group = Group.Blue;
+    public boolean isMaster() {
+        return isMaster;
+    }
+
+    public void setMaster(boolean master) {
+        this.isMaster = master;
+    }
+
     private boolean isMaster;
-
-    private List<Bullet> bullets = new ArrayList<>();
-    public List<Bullet> getBullets() {
-        return bullets;
-    }
-
-    public void setBullets(List<Bullet> bullets) {
-        this.bullets = bullets;
-    }
+    private boolean die = false;
+    Rectangle rectangle = new Rectangle();
 
     public void setSpeed(int speed) {
         this.speed = speed;
+    }
+
+    public boolean isDie() {
+        return die;
+    }
+
+    public void setDie(boolean die) {
+        this.die = die;
     }
 
     private int speed = 10;
@@ -48,19 +58,29 @@ public class Tank {
         this.dir = dir;
     }
 
-    public Tank(int x, int y,boolean master) {
+    public Tank(int x, int y) {
         this.x = x;
         this.y = y;
-        this.isMaster = master;
+        rectangle.x = this.x;
+        rectangle.y = this.y;
+        rectangle.width = width;
+        rectangle.height = height;
     }
 
-    int width = 50;
-    int height = 50;
+    static int width = 50;
+    static int height = 50;
 
     public Tank(int x, int y, TankFrame tankFrame) {
         this.x = x;
         this.y = y;
         this.tankFrame = tankFrame;
+    }
+
+    /**
+     * 坦克被打死消失
+     */
+    public void goDie(){
+        die = true;
     }
 
     /**
@@ -93,6 +113,8 @@ public class Tank {
      * @param g
      */
     public void tankPaint(Graphics g) {
+        if(die) TankFrame.tankList.remove(this);
+
         g.setColor(Color.GREEN);
         switch (dir) {
             case LIFT:
@@ -115,7 +137,7 @@ public class Tank {
      * 创建坦克开火的的子弹对象并对子弹数量加1
      */
     public void fire() {
-        bullets.add(new Bullet(this.x, this.y, getDir(),this));
-        ++ TankFrame.bulletNum;
+        Bullet bullet = new Bullet(this.x, this.y, getDir(), group);
+        TankFrame.bullets.add(bullet);
     }
 }
