@@ -14,11 +14,15 @@ public class Tank {
      */
     private int x;
     private int y;
+    private boolean isMaster;
 
-
-    List<Bullet> bullets = new ArrayList<>();
+    private List<Bullet> bullets = new ArrayList<>();
     public List<Bullet> getBullets() {
         return bullets;
+    }
+
+    public void setBullets(List<Bullet> bullets) {
+        this.bullets = bullets;
     }
 
     public void setSpeed(int speed) {
@@ -44,9 +48,10 @@ public class Tank {
         this.dir = dir;
     }
 
-    public Tank(int x, int y) {
+    public Tank(int x, int y,boolean master) {
         this.x = x;
         this.y = y;
+        this.isMaster = master;
     }
 
     int width = 50;

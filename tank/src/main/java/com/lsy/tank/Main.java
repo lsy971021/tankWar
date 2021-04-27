@@ -1,8 +1,5 @@
 package com.lsy.tank;
 
-import java.awt.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.util.List;
 
 /**
@@ -12,9 +9,9 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) throws IllegalAccessException, InstantiationException, InterruptedException {
         TankFrame tankFrame = new TankFrame();
-        List<Tank> tankList = tankFrame.tankList;
+        List<Tank> tankList = TankFrame.tankList;
         for (int i = 1; i < 4; i++) {
-            tankList.add(new Tank(100*i, 100));
+            tankList.add(new Tank(100*i, 100,false));
             ++ TankFrame.tankNum;
         }
         while (true){

@@ -28,13 +28,13 @@ public class TankFrame extends Frame {
     /**
      * 创建主坦克对象
      */
-    Tank tank = new Tank(100, 200, this);
+    static Tank tank = new Tank(100, 200,true);
     /**
      * 创建电脑坦克list对象
      */
-    List<Tank> tankList = new ArrayList<>();
+    static List<Tank> tankList = new ArrayList<>();
 
-    boolean up = false, down = false, lift = false, right = false;
+    private boolean up = false, down = false, lift = false, right = false;
 
     /**
      * 设置窗口属性
@@ -48,7 +48,7 @@ public class TankFrame extends Frame {
         setVisible(true);
         addKeyListener(new MyKeyListener());
         /**
-         * 创建一个窗口监听器，如果按X 则执行windowClosing方法
+         * 创建一个窗口监听器，如果点X 则执行windowClosing方法
          */
         addWindowListener(new WindowAdapter() {
             @Override
@@ -112,7 +112,7 @@ public class TankFrame extends Frame {
                 }
             }
             tankOther.tankPaint(g);
-            for (int u = 0; u < tankOther.bullets.size(); u++) {
+            for (int u = 0; u < tankOther.getBullets().size(); u++) {
                 tankOther.getBullets().get(u).bulletPaint(g);
             }
         }
@@ -128,7 +128,7 @@ public class TankFrame extends Frame {
 //        for (Bullet bullet : bullets) {
 //            bullet.bulletPaint(g);
 //        }
-        for (int i = 0; i < tank.bullets.size(); i++) {
+        for (int i = 0; i < tank.getBullets().size(); i++) {
             tank.getBullets().get(i).bulletPaint(g);
         }
 
